@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('needs', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained()->restrictOnDelete();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->enum('target_level', ['beginner', 'intermediate', 'advanced']);
+            $table->enum('status', ['open', 'closed'])->default('open');
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->index(['user_id', 'category_id']);
+            $table->index(['status', 'target_level']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('needs');
+    }
+};
