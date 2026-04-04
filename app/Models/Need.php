@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Need extends Model
@@ -21,24 +19,21 @@ class Need extends Model
         'status',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'deleted_at' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'deleted_at' => 'datetime',
+    ];
 
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function category(): BelongsTo
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function exchangeRequests(): HasMany
+    public function exchangeRequests()
     {
         return $this->hasMany(ExchangeRequest::class);
     }
