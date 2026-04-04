@@ -4,9 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ExchangeRequest extends Model
 {
@@ -26,47 +23,44 @@ class ExchangeRequest extends Model
         'completed_at',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'expires_at' => 'datetime',
-            'accepted_at' => 'datetime',
-            'cancelled_at' => 'datetime',
-            'completed_at' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'expires_at' => 'datetime',
+        'accepted_at' => 'datetime',
+        'cancelled_at' => 'datetime',
+        'completed_at' => 'datetime',
+    ];
 
-    public function learner(): BelongsTo
+    public function learner()
     {
         return $this->belongsTo(User::class, 'learner_id');
     }
 
-    public function helper(): BelongsTo
+    public function helper()
     {
         return $this->belongsTo(User::class, 'helper_id');
     }
 
-    public function need(): BelongsTo
+    public function need()
     {
         return $this->belongsTo(Need::class);
     }
 
-    public function skill(): BelongsTo
+    public function skill()
     {
         return $this->belongsTo(Skill::class);
     }
 
-    public function proposedTimes(): HasMany
+    public function proposedTimes()
     {
         return $this->hasMany(ProposedTime::class);
     }
 
-    public function conversation(): HasOne
+    public function conversation()
     {
         return $this->hasOne(Conversation::class);
     }
 
-    public function learningSession(): HasOne
+    public function learningSession()
     {
         return $this->hasOne(LearningSession::class);
     }
