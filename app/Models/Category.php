@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -17,19 +16,16 @@ class Category extends Model
         'is_active',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'is_active' => 'boolean',
-        ];
-    }
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
 
-    public function skills(): HasMany
+    public function skills()
     {
         return $this->hasMany(Skill::class);
     }
 
-    public function needs(): HasMany
+    public function needs()
     {
         return $this->hasMany(Need::class);
     }
