@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProposedTime extends Model
 {
@@ -17,16 +16,13 @@ class ProposedTime extends Model
         'is_selected',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'start_at' => 'datetime',
-            'end_at' => 'datetime',
-            'is_selected' => 'boolean',
-        ];
-    }
+    protected $casts = [
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
+        'is_selected' => 'boolean',
+    ];
 
-    public function exchangeRequest(): BelongsTo
+    public function exchangeRequest()
     {
         return $this->belongsTo(ExchangeRequest::class);
     }
