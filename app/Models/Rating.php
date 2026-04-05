@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Rating extends Model
 {
@@ -18,17 +17,17 @@ class Rating extends Model
         'comment',
     ];
 
-    public function learningSession(): BelongsTo
+    public function learningSession()
     {
         return $this->belongsTo(LearningSession::class);
     }
 
-    public function author(): BelongsTo
+    public function author()
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function target(): BelongsTo
+    public function target()
     {
         return $this->belongsTo(User::class, 'target_id');
     }
