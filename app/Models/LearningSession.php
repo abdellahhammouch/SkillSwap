@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LearningSession extends Model
 {
@@ -22,28 +20,25 @@ class LearningSession extends Model
         'completed_at',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'scheduled_at' => 'datetime',
-            'confirmed_by_learner_at' => 'datetime',
-            'confirmed_by_helper_at' => 'datetime',
-            'cancelled_at' => 'datetime',
-            'completed_at' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'scheduled_at' => 'datetime',
+        'confirmed_by_learner_at' => 'datetime',
+        'confirmed_by_helper_at' => 'datetime',
+        'cancelled_at' => 'datetime',
+        'completed_at' => 'datetime',
+    ];
 
-    public function exchangeRequest(): BelongsTo
+    public function exchangeRequest()
     {
         return $this->belongsTo(ExchangeRequest::class);
     }
 
-    public function transactions(): HasMany
+    public function transactions()
     {
         return $this->hasMany(Transaction::class);
     }
 
-    public function ratings(): HasMany
+    public function ratings()
     {
         return $this->hasMany(Rating::class);
     }
