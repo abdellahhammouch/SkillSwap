@@ -11,6 +11,11 @@ class CategoryRepository
         return Category::orderBy('name')->get();
     }
 
+    public function getActive()
+    {
+        return Category::where('is_active', true)->orderBy('name')->get();
+    }
+
     public function create(array $data)
     {
         return Category::create($data);
