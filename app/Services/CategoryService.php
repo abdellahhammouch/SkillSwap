@@ -20,6 +20,11 @@ class CategoryService
         return $this->categoryRepository->getAll();
     }
 
+    public function getActiveCategories()
+    {
+        return $this->categoryRepository->getActive();
+    }
+
     public function createCategory(array $data)
     {
         $data['slug'] = Str::slug($data['name']);
