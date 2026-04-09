@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ExchangeRequestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/skills', [SkillController::class, 'store'])->name('skills.store');
     Route::patch('/skills/{skill}', [SkillController::class, 'update'])->name('skills.update');
     Route::delete('/skills/{skill}', [SkillController::class, 'destroy'])->name('skills.destroy');
+
+    Route::get('/exchange-requests', [ExchangeRequestController::class, 'index'])->name('exchange-requests.index');
+    Route::get('/exchange-requests/create', [ExchangeRequestController::class, 'create'])->name('exchange-requests.create');
+    Route::post('/exchange-requests', [ExchangeRequestController::class, 'store'])->name('exchange-requests.store');
+    Route::get('/exchange-requests/{exchangeRequest}', [ExchangeRequestController::class, 'show'])->name('exchange-requests.show');
+    Route::patch('/exchange-requests/{exchangeRequest}/accept', [ExchangeRequestController::class, 'accept'])->name('exchange-requests.accept');
+    Route::patch('/exchange-requests/{exchangeRequest}/refuse', [ExchangeRequestController::class, 'refuse'])->name('exchange-requests.refuse');
+    Route::patch('/exchange-requests/{exchangeRequest}/cancel', [ExchangeRequestController::class, 'cancel'])->name('exchange-requests.cancel');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
