@@ -23,6 +23,10 @@
                     <x-nav-link :href="route('skills.index')" :active="request()->routeIs('skills.*')">
                         {{ __('My Skills') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('exchange-requests.index')" :active="request()->routeIs('exchange-requests.*')">
+                        {{ __('Requests') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -85,6 +89,10 @@
 
             <x-responsive-nav-link :href="route('skills.index')" :active="request()->routeIs('skills.*')">
                 {{ __('My Skills') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('exchange-requests.index')" :active="request()->routeIs('exchange-requests.*')">
+                {{ __('Requests') }}
             </x-responsive-nav-link>
         </div>
 
