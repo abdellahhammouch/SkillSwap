@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\DB;
 class ExchangeRequestService
 {
     protected $exchangeRequestRepository;
+    protected $conversationService;
 
-    public function __construct(ExchangeRequestRepository $exchangeRequestRepository)
+    public function __construct(ExchangeRequestRepository $exchangeRequestRepository, ConversationService $conversationService)
     {
         $this->exchangeRequestRepository = $exchangeRequestRepository;
+        $this->conversationService = $conversationService;
     }
 
     public function getSentRequests($userId)
