@@ -80,6 +80,12 @@
                         </form>
                     @endif
 
+                    @if ($exchangeRequest->status === 'accepted' && $exchangeRequest->conversation)
+                        <a href="{{ route('conversations.show', $exchangeRequest->conversation) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
+                            Open conversation
+                        </a>
+                    @endif
+
                     <a href="{{ route('exchange-requests.index') }}" class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900">
                         Back to requests
                     </a>
