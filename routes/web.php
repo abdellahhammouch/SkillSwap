@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NeedController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ExchangeRequestController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/exchange-requests/{exchangeRequest}/accept', [ExchangeRequestController::class, 'accept'])->name('exchange-requests.accept');
     Route::patch('/exchange-requests/{exchangeRequest}/refuse', [ExchangeRequestController::class, 'refuse'])->name('exchange-requests.refuse');
     Route::patch('/exchange-requests/{exchangeRequest}/cancel', [ExchangeRequestController::class, 'cancel'])->name('exchange-requests.cancel');
+
+    Route::get('/conversations', [ConversationController::class, 'index'])->name('conversations.index');
+    Route::get('/conversations/{conversation}', [ConversationController::class, 'show'])->name('conversations.show');
+    Route::post('/conversations/{conversation}/messages', [MessageController::class, 'store'])->name('messages.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
