@@ -10,6 +10,7 @@ class ExchangeRequest extends Model
     use HasFactory;
 
     protected $fillable = [
+        'type',
         'learner_id',
         'helper_id',
         'need_id',

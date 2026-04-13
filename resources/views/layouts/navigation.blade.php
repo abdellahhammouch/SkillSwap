@@ -24,8 +24,13 @@
                         {{ __('My Skills') }}
                     </x-nav-link>
 
+<<<<<<< HEAD
                     <x-nav-link :href="route('needs.index')" :active="request()->routeIs('needs.*')">
                         {{ __('My Needs') }}
+=======
+                    <x-nav-link :href="route('exchange-requests.index')" :active="request()->routeIs('exchange-requests.*')">
+                        {{ __('Requests') }}
+>>>>>>> feature/exchange-requests
                     </x-nav-link>
                 </div>
             </div>
@@ -91,8 +96,13 @@
                 {{ __('My Skills') }}
             </x-responsive-nav-link>
 
+<<<<<<< HEAD
             <x-responsive-nav-link :href="route('needs.index')" :active="request()->routeIs('needs.*')">
                 {{ __('My Needs') }}
+=======
+            <x-responsive-nav-link :href="route('exchange-requests.index')" :active="request()->routeIs('exchange-requests.*')">
+                {{ __('Requests') }}
+>>>>>>> feature/exchange-requests
             </x-responsive-nav-link>
         </div>
 
