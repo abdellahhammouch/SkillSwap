@@ -80,10 +80,14 @@ class ExchangeRequestService
         $this->ensureRequestIsPending($exchangeRequest);
         $this->ensureCurrentUserCanAnswer($exchangeRequest);
 
-        return $this->exchangeRequestRepository->update($exchangeRequest, [
+        $exchangeRequest = $this->exchangeRequestRepository->update($exchangeRequest, [
             'status' => 'accepted',
             'accepted_at' => now(),
         ]);
+
+        $this->conversationService->createForAcceptedExchangeRequest($exchangeRequest);
+
+        return $exchangeRequest;
     }
 
     public function refuseRequest(ExchangeRequest $exchangeRequest)
