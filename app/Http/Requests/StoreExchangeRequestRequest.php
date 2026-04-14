@@ -26,10 +26,6 @@ class StoreExchangeRequestRequest extends FormRequest
             'need_id' => ['nullable', 'exists:needs,id'],
             'skill_id' => ['nullable', 'exists:skills,id'],
             'message' => ['nullable', 'string'],
-            'duration_minutes' => ['nullable', 'integer', 'min:15'],
-            'proposed_times' => ['required', 'array', 'min:1', 'max:3'],
-            'proposed_times.*.start_at' => ['required', 'date'],
-            'proposed_times.*.end_at' => ['required', 'date'],
         ];
     }
 }
