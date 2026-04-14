@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('exchange_request_id')->constrained()->cascadeOnDelete();
             $table->timestamp('start_at');
-            $table->timestamp('end_at');
+            $table->unsignedInteger('duration_minutes');
             $table->boolean('is_selected')->default(false);
             $table->timestamps();
-
-            $table->index(['exchange_request_id', 'start_at']);
         });
     }
 
