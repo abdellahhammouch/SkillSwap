@@ -21,9 +21,6 @@ return new class extends Migration
             $table->enum('status', ['open', 'closed'])->default('open');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->index(['user_id', 'category_id']);
-            $table->index(['status', 'target_level']);
         });
     }
 
