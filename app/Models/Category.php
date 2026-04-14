@@ -20,6 +20,11 @@ class Category extends Model
         'is_active' => 'boolean',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function skills()
     {
         return $this->hasMany(Skill::class);
