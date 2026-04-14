@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('learning_sessions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('exchange_request_id')->unique()->constrained()->cascadeOnDelete();
+            $table->foreignId('exchange_request_id')->constrained()->cascadeOnDelete();
             $table->timestamp('scheduled_at');
             $table->unsignedInteger('duration_minutes');
             $table->enum('status', ['scheduled', 'in_progress', 'completed', 'cancelled'])->default('scheduled');
@@ -22,8 +22,6 @@ return new class extends Migration
             $table->timestamp('cancelled_at')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
-
-            $table->index(['scheduled_at', 'status']);
         });
     }
 
