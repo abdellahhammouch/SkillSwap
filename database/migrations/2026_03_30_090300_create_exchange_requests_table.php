@@ -25,10 +25,6 @@ return new class extends Migration
             $table->timestamp('cancelled_at')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
-
-            $table->index(['learner_id', 'status']);
-            $table->index(['helper_id', 'status']);
-            $table->index('expires_at');
         });
     }
 
