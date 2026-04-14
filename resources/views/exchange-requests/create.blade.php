@@ -76,33 +76,9 @@
                     </div>
 
                     <div>
-                        <x-input-label for="duration_minutes" :value="__('Duration in minutes')" />
-                        <x-text-input id="duration_minutes" name="duration_minutes" type="number" min="15" class="mt-1 block w-full" :value="old('duration_minutes')" />
-                        <x-input-error class="mt-2" :messages="$errors->get('duration_minutes')" />
-                    </div>
-
-                    <div>
                         <x-input-label for="message" :value="__('Message')" />
                         <textarea id="message" name="message" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('message') }}</textarea>
                         <x-input-error class="mt-2" :messages="$errors->get('message')" />
-                    </div>
-
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <h3 class="text-base font-semibold text-gray-900 mb-3">Proposed time</h3>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <x-input-label for="start_at" :value="__('Start at')" />
-                                <x-text-input id="start_at" name="proposed_times[0][start_at]" type="datetime-local" class="mt-1 block w-full" required />
-                                <x-input-error class="mt-2" :messages="$errors->get('proposed_times.0.start_at')" />
-                            </div>
-
-                            <div>
-                                <x-input-label for="end_at" :value="__('End at')" />
-                                <x-text-input id="end_at" name="proposed_times[0][end_at]" type="datetime-local" class="mt-1 block w-full" required />
-                                <x-input-error class="mt-2" :messages="$errors->get('proposed_times.0.end_at')" />
-                            </div>
-                        </div>
                     </div>
 
                     <div class="flex items-center gap-3">
