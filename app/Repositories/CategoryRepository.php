@@ -28,6 +28,17 @@ class CategoryRepository
         return $category;
     }
 
+    public function slugExists($slug, $ignoreCategoryId = null)
+    {
+        $query = Category::where('slug', $slug);
+
+        if ($ignoreCategoryId) {
+            $query->where('id', '!=', $ignoreCategoryId);
+        }
+
+        return $query->exists();
+    }
+
     public function delete(Category $category)
     {
         return $category->delete();
