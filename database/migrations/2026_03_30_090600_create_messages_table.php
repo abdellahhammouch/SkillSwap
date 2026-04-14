@@ -18,8 +18,6 @@ return new class extends Migration
             $table->text('content');
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
-
-            $table->index(['conversation_id', 'created_at']);
         });
     }
 
