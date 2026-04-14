@@ -54,22 +54,9 @@ class ExchangeRequestService
                 'need_id' => $need?->id,
                 'skill_id' => $skill?->id,
                 'message' => $data['message'] ?? null,
-                'duration_minutes' => $data['duration_minutes'] ?? null,
                 'status' => 'pending',
                 'expires_at' => now()->addDays(7),
             ]);
-
-            foreach ($data['proposed_times'] as $proposedTime) {
-                if (strtotime($proposedTime['end_at']) <= strtotime($proposedTime['start_at'])) {
-                    abort(422, 'The proposed end time must be after the proposed start time.');
-                }
-
-                $exchangeRequest->proposedTimes()->create([
-                    'start_at' => $proposedTime['start_at'],
-                    'end_at' => $proposedTime['end_at'],
-                    'is_selected' => false,
-                ]);
-            }
 
             return $exchangeRequest;
         });
