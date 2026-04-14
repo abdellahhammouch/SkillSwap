@@ -20,9 +20,6 @@ return new class extends Migration
             $table->enum('level', ['beginner', 'intermediate', 'advanced']);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
-
-            $table->index(['user_id', 'category_id']);
-            $table->index('level');
         });
     }
 
