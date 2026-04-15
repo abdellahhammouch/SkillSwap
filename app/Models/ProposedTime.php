@@ -12,18 +12,22 @@ class ProposedTime extends Model
     protected $fillable = [
         'exchange_request_id',
         'start_at',
-        'end_at',
+        'duration_minutes',
         'is_selected',
     ];
 
     protected $casts = [
         'start_at' => 'datetime',
-        'end_at' => 'datetime',
         'is_selected' => 'boolean',
     ];
 
     public function exchangeRequest()
     {
         return $this->belongsTo(ExchangeRequest::class);
+    }
+
+    public function getEndAtAttribute()
+    {
+        return $this->start_at?->copy()->addMinutes($this->duration_minutes);
     }
 }
