@@ -19,8 +19,6 @@ return new class extends Migration
             $table->unsignedInteger('amount_minutes');
             $table->text('description')->nullable();
             $table->timestamps();
-
-            $table->index(['user_id', 'type']);
         });
     }
 
