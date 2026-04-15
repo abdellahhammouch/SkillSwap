@@ -25,18 +25,18 @@ class LearningSessionRepository
 
     public function createFromProposedTime(ProposedTime $proposedTime)
     {
-        $durationMinutes = (int) $proposedTime->start_at->diffInMinutes($proposedTime->end_at);
+        return LearningSession::create([
+            'exchange_request_id' => $proposedTime->exchange_request_id,
+            'scheduled_at' => $proposedTime->start_at,
+            'duration_minutes' => $proposedTime->duration_minutes,
+            'status' => 'scheduled',
+        ]);
+    }
 
-        return LearningSession::firstOrCreate(
-            [
-                'exchange_request_id' => $proposedTime->exchange_request_id,
-            ],
-            [
-                'scheduled_at' => $proposedTime->start_at,
-                'duration_minutes' => $durationMinutes,
-                'status' => 'scheduled',
-                'confirmed_by_helper_at' => now(),
-            ]
-        );
+    public function save(LearningSession $learningSession)
+    {
+        $learningSession->save();
+
+        return $learningSession;
     }
 }
