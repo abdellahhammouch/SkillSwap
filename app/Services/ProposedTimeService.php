@@ -21,13 +21,13 @@ class ProposedTimeService
 
         return DB::transaction(function () use ($exchangeRequest, $data) {
             foreach ($data['proposed_times'] as $proposedTime) {
-                if (strtotime($proposedTime['end_at']) <= strtotime($proposedTime['start_at'])) {
-                    abort(422, 'The proposed end time must be after the proposed start time.');
+                if ((int) $proposedTime['duration_minutes'] <= 0) {
+                    abort(422, 'The duration must be greater than zero.');
                 }
 
                 $this->proposedTimeRepository->create($exchangeRequest, [
                     'start_at' => $proposedTime['start_at'],
-                    'end_at' => $proposedTime['end_at'],
+                    'duration_minutes' => $proposedTime['duration_minutes'],
                     'is_selected' => false,
                 ]);
             }
@@ -38,7 +38,7 @@ class ProposedTimeService
 
     public function ensureUserCanProposeTimes(ExchangeRequest $exchangeRequest, $userId)
     {
-        $exchangeRequest->loadMissing('learningSession');
+        $exchangeRequest->loadMissing('learningSessions');
 
         if ($exchangeRequest->status !== 'accepted') {
             abort(422, 'Times can be proposed only after the exchange request is accepted.');
@@ -48,8 +48,10 @@ class ProposedTimeService
             abort(403);
         }
 
-        if ($exchangeRequest->learningSession) {
-            abort(422, 'A learning session already exists for this exchange request.');
+        if ($exchangeRequest->learningSessions->contains(function ($learningSession) {
+            return in_array($learningSession->status, ['scheduled', 'in_progress'], true);
+        })) {
+            abort(422, 'A learning session is already active for this exchange request.');
         }
     }
 
