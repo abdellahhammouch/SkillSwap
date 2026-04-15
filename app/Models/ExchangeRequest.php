@@ -61,8 +61,8 @@ class ExchangeRequest extends Model
         return $this->hasOne(Conversation::class);
     }
 
-    public function learningSession()
+    public function learningSessions()
     {
-        return $this->hasOne(LearningSession::class);
+        return $this->hasMany(LearningSession::class)->latest('scheduled_at');
     }
 }
