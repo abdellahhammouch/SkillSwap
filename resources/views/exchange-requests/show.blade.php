@@ -21,24 +21,61 @@
                     <p><strong>Helper:</strong> {{ $exchangeRequest->helper->name }}</p>
                     <p><strong>Need:</strong> {{ $exchangeRequest->need?->title ?: 'No need selected' }}</p>
                     <p><strong>Skill:</strong> {{ $exchangeRequest->skill?->title ?: 'No skill selected' }}</p>
-                    <p><strong>Duration:</strong> {{ $exchangeRequest->duration_minutes ? $exchangeRequest->duration_minutes.' minutes' : 'Not defined' }}</p>
                     <p><strong>Message:</strong> {{ $exchangeRequest->message ?: 'No message' }}</p>
                     <p><strong>Expires at:</strong> {{ $exchangeRequest->expires_at?->format('Y-m-d H:i') }}</p>
                 </div>
 
-                <div class="mt-6">
-                    <h3 class="text-base font-semibold text-gray-900 mb-3">Proposed times</h3>
+                @if ($exchangeRequest->status === 'accepted')
+                    <div class="mt-6">
+                        <div class="flex items-center justify-between gap-3 mb-3">
+                            <h3 class="text-base font-semibold text-gray-900">Proposed times</h3>
 
-                    <div class="space-y-2">
-                        @foreach ($exchangeRequest->proposedTimes as $proposedTime)
-                            <div class="border border-gray-200 rounded p-3 text-sm text-gray-700">
-                                {{ $proposedTime->start_at->format('Y-m-d H:i') }}
-                                to
-                                {{ $proposedTime->end_at->format('Y-m-d H:i') }}
-                            </div>
-                        @endforeach
+                            @if ($exchangeRequest->learner_id === auth()->id() && ! $exchangeRequest->learningSession)
+                                <a href="{{ route('proposed-times.create', $exchangeRequest) }}" class="text-sm text-indigo-600 hover:text-indigo-900">
+                                    Propose times
+                                </a>
+                            @endif
+                        </div>
+
+                        <div class="space-y-2">
+                            @forelse ($exchangeRequest->proposedTimes as $proposedTime)
+                                <div class="border border-gray-200 rounded p-3 text-sm text-gray-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                    <span>
+                                        {{ $proposedTime->start_at->format('Y-m-d H:i') }}
+                                        to
+                                        {{ $proposedTime->end_at->format('Y-m-d H:i') }}
+
+                                        @if ($proposedTime->is_selected)
+                                            <span class="ml-2 text-green-700 font-semibold">Selected</span>
+                                        @endif
+                                    </span>
+
+                                    @if ($exchangeRequest->helper_id === auth()->id() && ! $exchangeRequest->learningSession)
+                                        <form method="POST" action="{{ route('proposed-times.select', $proposedTime) }}">
+                                            @csrf
+                                            @method('PATCH')
+
+                                            <x-primary-button>{{ __('Choose') }}</x-primary-button>
+                                        </form>
+                                    @endif
+                                </div>
+                            @empty
+                                <p class="text-sm text-gray-600">
+                                    No proposed times yet. The learner should propose times after the request is accepted.
+                                </p>
+                            @endforelse
+                        </div>
                     </div>
-                </div>
+
+                    @if ($exchangeRequest->learningSession)
+                        <div class="mt-4 rounded border border-green-200 bg-green-50 p-3 text-sm text-green-800">
+                            A learning session is already planned.
+                            <a href="{{ route('learning-sessions.show', $exchangeRequest->learningSession) }}" class="font-semibold underline">
+                                View session
+                            </a>
+                        </div>
+                    @endif
+                @endif
 
                 @php
                     $canAnswer = $exchangeRequest->status === 'pending'
