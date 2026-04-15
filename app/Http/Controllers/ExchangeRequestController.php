@@ -52,7 +52,7 @@ class ExchangeRequestController extends Controller
     {
         $this->exchangeRequestService->ensureCurrentUserCanView($exchangeRequest);
 
-        $exchangeRequest->load(['learner', 'helper', 'need', 'skill', 'proposedTimes', 'conversation', 'learningSession']);
+        $exchangeRequest->load(['learner', 'helper', 'need', 'skill', 'proposedTimes', 'conversation', 'learningSessions']);
 
         return view('exchange-requests.show', compact('exchangeRequest'));
     }
