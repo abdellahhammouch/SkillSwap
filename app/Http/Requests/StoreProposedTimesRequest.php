@@ -10,7 +10,7 @@ class StoreProposedTimesRequest extends FormRequest
     {
         $proposedTimes = collect($this->input('proposed_times', []))
             ->filter(function ($proposedTime) {
-                return ! empty($proposedTime['start_at']) || ! empty($proposedTime['end_at']);
+                return ! empty($proposedTime['start_at']) || ! empty($proposedTime['duration_minutes']);
             })
             ->values()
             ->all();
@@ -30,7 +30,7 @@ class StoreProposedTimesRequest extends FormRequest
         return [
             'proposed_times' => ['required', 'array', 'min:1', 'max:3'],
             'proposed_times.*.start_at' => ['required', 'date'],
-            'proposed_times.*.end_at' => ['required', 'date'],
+            'proposed_times.*.duration_minutes' => ['required', 'integer', 'min:15'],
         ];
     }
 }
