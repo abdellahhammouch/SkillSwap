@@ -21,7 +21,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['learning_session_id', 'author_id']);
-            $table->index('target_id');
         });
     }
 
