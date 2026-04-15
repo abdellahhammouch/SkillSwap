@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/learning-sessions', [LearningSessionController::class, 'index'])->name('learning-sessions.index');
     Route::get('/learning-sessions/{learningSession}', [LearningSessionController::class, 'show'])->name('learning-sessions.show');
+    Route::patch('/learning-sessions/{learningSession}/confirm-completion', [LearningSessionController::class, 'confirmCompletion'])->name('learning-sessions.confirm-completion');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
