@@ -39,7 +39,7 @@
             </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <div class="space-y-4">
+                <div id="messages-list" class="space-y-4">
                     @forelse ($conversation->messages as $message)
                         <div class="{{ $message->sender_id === auth()->id() ? 'text-right' : 'text-left' }}">
                             <div class="inline-block max-w-2xl rounded-lg px-4 py-3 {{ $message->sender_id === auth()->id() ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900' }}">
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                     @empty
-                        <p class="text-sm text-gray-600">
+                        <p id="empty-messages" class="text-sm text-gray-600">
                             No messages yet. Start the conversation below.
                         </p>
                     @endforelse
@@ -85,4 +85,53 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (! window.Echo) {
+                return;
+            }
+
+            const conversationId = @json($conversation->id);
+            const currentUserId = @json(auth()->id());
+            const messagesList = document.getElementById('messages-list');
+
+            function escapeHtml(value) {
+                return String(value)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            }
+
+            function addMessage(event) {
+                const emptyMessages = document.getElementById('empty-messages');
+
+                if (emptyMessages) {
+                    emptyMessages.remove();
+                }
+
+                const isMine = Number(event.sender_id) === Number(currentUserId);
+                const wrapper = document.createElement('div');
+                const bubbleClasses = isMine
+                    ? 'bg-gray-800 text-white'
+                    : 'bg-gray-100 text-gray-900';
+
+                wrapper.className = isMine ? 'text-right' : 'text-left';
+                wrapper.innerHTML = `
+                    <div class="inline-block max-w-2xl rounded-lg px-4 py-3 ${bubbleClasses}">
+                        <p class="text-sm font-semibold">${isMine ? 'Me' : escapeHtml(event.sender_name)}</p>
+                        <p class="mt-1 text-sm">${escapeHtml(event.content)}</p>
+                        <p class="mt-2 text-xs opacity-75">${escapeHtml(event.created_at)}</p>
+                    </div>
+                `;
+
+                messagesList.appendChild(wrapper);
+            }
+
+            window.Echo.private(`conversation.${conversationId}`)
+                .listen('.message.sent', addMessage);
+        });
+    </script>
 </x-app-layout>

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\MessageSent;
 use App\Models\Conversation;
 use App\Repositories\MessageRepository;
 
@@ -27,6 +28,8 @@ class MessageService
         ]);
 
         $conversation->touch();
+
+        broadcast(new MessageSent($message))->toOthers();
 
         return $message;
     }
