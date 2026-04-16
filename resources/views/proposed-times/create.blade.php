@@ -13,7 +13,7 @@
                 </h3>
 
                 <p class="mt-2 text-sm text-gray-600">
-                    You can propose up to 3 times. The helper will choose one to plan the learning session.
+                    You can propose up to 3 times. For each proposed time, enter the start date and time, then the duration in minutes.
                 </p>
             </div>
 
@@ -35,9 +35,9 @@
                                 </div>
 
                                 <div>
-                                    <x-input-label for="end_at_{{ $i }}" :value="__('End at')" />
-                                    <x-text-input id="end_at_{{ $i }}" name="proposed_times[{{ $i }}][end_at]" type="datetime-local" class="mt-1 block w-full" :required="$i === 0" />
-                                    <x-input-error class="mt-2" :messages="$errors->get('proposed_times.'.$i.'.end_at')" />
+                                    <x-input-label for="duration_minutes_{{ $i }}" :value="__('Duration in minutes')" />
+                                    <x-text-input id="duration_minutes_{{ $i }}" name="proposed_times[{{ $i }}][duration_minutes]" type="number" min="15" step="15" class="mt-1 block w-full" :required="$i === 0" />
+                                    <x-input-error class="mt-2" :messages="$errors->get('proposed_times.'.$i.'.duration_minutes')" />
                                 </div>
                             </div>
                         </div>
