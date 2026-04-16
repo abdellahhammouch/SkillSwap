@@ -14,6 +14,16 @@
             @endif
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                @php
+                    $learningSessions = $exchangeRequest->learningSessions->sortByDesc('scheduled_at')->values();
+                    $activeLearningSession = $learningSessions->first(function ($learningSession) {
+                        return in_array($learningSession->status, ['scheduled', 'in_progress'], true);
+                    });
+                    $latestCompletedSession = $learningSessions->first(function ($learningSession) {
+                        return $learningSession->status === 'completed';
+                    });
+                @endphp
+
                 <div class="space-y-3">
                     <p><strong>Type:</strong> {{ $exchangeRequest->type === 'help_request' ? 'Ask for help' : 'Offer help' }}</p>
                     <p><strong>Status:</strong> {{ ucfirst($exchangeRequest->status) }}</p>
@@ -30,7 +40,7 @@
                         <div class="flex items-center justify-between gap-3 mb-3">
                             <h3 class="text-base font-semibold text-gray-900">Proposed times</h3>
 
-                            @if ($exchangeRequest->learner_id === auth()->id() && ! $exchangeRequest->learningSession)
+                            @if ($exchangeRequest->learner_id === auth()->id() && ! $activeLearningSession)
                                 <a href="{{ route('proposed-times.create', $exchangeRequest) }}" class="text-sm text-indigo-600 hover:text-indigo-900">
                                     Propose times
                                 </a>
@@ -42,15 +52,19 @@
                                 <div class="border border-gray-200 rounded p-3 text-sm text-gray-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                                     <span>
                                         {{ $proposedTime->start_at->format('Y-m-d H:i') }}
-                                        to
-                                        {{ $proposedTime->end_at->format('Y-m-d H:i') }}
+                                        for
+                                        {{ $proposedTime->duration_minutes }} minutes
+
+                                        <span class="ml-1 text-gray-500">
+                                            ({{ $proposedTime->duration_minutes }} SS)
+                                        </span>
 
                                         @if ($proposedTime->is_selected)
                                             <span class="ml-2 text-green-700 font-semibold">Selected</span>
                                         @endif
                                     </span>
 
-                                    @if ($exchangeRequest->helper_id === auth()->id() && ! $exchangeRequest->learningSession)
+                                    @if ($exchangeRequest->helper_id === auth()->id() && ! $activeLearningSession && $proposedTime->start_at->isFuture())
                                         <form method="POST" action="{{ route('proposed-times.select', $proposedTime) }}">
                                             @csrf
                                             @method('PATCH')
@@ -67,11 +81,18 @@
                         </div>
                     </div>
 
-                    @if ($exchangeRequest->learningSession)
+                    @if ($activeLearningSession)
                         <div class="mt-4 rounded border border-green-200 bg-green-50 p-3 text-sm text-green-800">
-                            A learning session is already planned.
-                            <a href="{{ route('learning-sessions.show', $exchangeRequest->learningSession) }}" class="font-semibold underline">
+                            A learning session is currently active for this exchange request.
+                            <a href="{{ route('learning-sessions.show', $activeLearningSession) }}" class="font-semibold underline">
                                 View session
+                            </a>
+                        </div>
+                    @elseif ($latestCompletedSession)
+                        <div class="mt-4 rounded border border-blue-200 bg-blue-50 p-3 text-sm text-blue-800">
+                            The latest session is completed. The learner can propose new times to plan another session in the same conversation.
+                            <a href="{{ route('learning-sessions.show', $latestCompletedSession) }}" class="font-semibold underline">
+                                View latest session
                             </a>
                         </div>
                     @endif
