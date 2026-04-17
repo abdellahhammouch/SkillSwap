@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NeedController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ExchangeRequestController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
@@ -44,6 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/conversations', [ConversationController::class, 'index'])->name('conversations.index');
     Route::get('/conversations/{conversation}', [ConversationController::class, 'show'])->name('conversations.show');
     Route::post('/conversations/{conversation}/messages', [MessageController::class, 'store'])->name('messages.store');
+
+    Route::get('/users/{user}', [ProfileController::class, 'show'])->name('users.show');
+    Route::post('/users/{user}/ratings', [RatingController::class, 'store'])->name('ratings.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
