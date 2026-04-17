@@ -10,17 +10,11 @@ class Rating extends Model
     use HasFactory;
 
     protected $fillable = [
-        'learning_session_id',
         'author_id',
         'target_id',
         'score',
         'comment',
     ];
-
-    public function learningSession()
-    {
-        return $this->belongsTo(LearningSession::class);
-    }
 
     public function author()
     {
