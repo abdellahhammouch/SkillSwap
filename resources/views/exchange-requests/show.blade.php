@@ -27,8 +27,8 @@
                 <div class="space-y-3">
                     <p><strong>Type:</strong> {{ $exchangeRequest->type === 'help_request' ? 'Ask for help' : 'Offer help' }}</p>
                     <p><strong>Status:</strong> {{ ucfirst($exchangeRequest->status) }}</p>
-                    <p><strong>Learner:</strong> {{ $exchangeRequest->learner->name }}</p>
-                    <p><strong>Helper:</strong> {{ $exchangeRequest->helper->name }}</p>
+                    <p><strong>Learner:</strong> <a href="{{ route('users.show', $exchangeRequest->learner) }}" class="text-indigo-600 hover:text-indigo-900">{{ $exchangeRequest->learner->name }}</a></p>
+                    <p><strong>Helper:</strong> <a href="{{ route('users.show', $exchangeRequest->helper) }}" class="text-indigo-600 hover:text-indigo-900">{{ $exchangeRequest->helper->name }}</a></p>
                     <p><strong>Need:</strong> {{ $exchangeRequest->need?->title ?: 'No need selected' }}</p>
                     <p><strong>Skill:</strong> {{ $exchangeRequest->skill?->title ?: 'No skill selected' }}</p>
                     <p><strong>Message:</strong> {{ $exchangeRequest->message ?: 'No message' }}</p>

@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('learning_session_id')->constrained()->cascadeOnDelete();
             $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('target_id')->constrained('users')->cascadeOnDelete();
             $table->unsignedTinyInteger('score');
             $table->text('comment')->nullable();
             $table->timestamps();
 
-            $table->unique(['learning_session_id', 'author_id']);
+            $table->unique(['author_id', 'target_id']);
         });
     }
 

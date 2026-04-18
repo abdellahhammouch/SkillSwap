@@ -5,6 +5,7 @@ use App\Http\Controllers\NeedController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ExchangeRequestController;
 use App\Http\Controllers\LearningSessionController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProposedTimeController;
@@ -54,6 +55,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/learning-sessions', [LearningSessionController::class, 'index'])->name('learning-sessions.index');
     Route::get('/learning-sessions/{learningSession}', [LearningSessionController::class, 'show'])->name('learning-sessions.show');
     Route::patch('/learning-sessions/{learningSession}/confirm-completion', [LearningSessionController::class, 'confirmCompletion'])->name('learning-sessions.confirm-completion');
+
+    Route::get('/users/{user}', [ProfileController::class, 'show'])->name('users.show');
+    Route::post('/users/{user}/ratings', [RatingController::class, 'store'])->name('ratings.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
