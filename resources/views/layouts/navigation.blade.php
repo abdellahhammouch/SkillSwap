@@ -39,6 +39,12 @@
                     <x-nav-link :href="route('learning-sessions.index')" :active="request()->routeIs('learning-sessions.*')">
                         {{ __('Sessions') }}
                     </x-nav-link>
+
+                    @if (Auth::user()->hasRole('admin'))
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
+                            {{ __('Admin') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -118,6 +124,12 @@
             <x-responsive-nav-link :href="route('learning-sessions.index')" :active="request()->routeIs('learning-sessions.*')">
                 {{ __('Sessions') }}
             </x-responsive-nav-link>
+
+            @if (Auth::user()->hasRole('admin'))
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
+                    {{ __('Admin') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
