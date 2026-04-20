@@ -18,7 +18,7 @@
 
                 @if ($categories->isEmpty())
                     <p class="text-sm text-gray-600">
-                        No active categories are available. An admin must create categories first.
+                        No active categories are available. Please run the category seeder first.
                     </p>
                 @else
                     <form method="POST" action="{{ route('needs.store') }}" class="space-y-4">
