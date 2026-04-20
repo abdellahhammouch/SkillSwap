@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -13,20 +12,17 @@ class CategorySeeder extends Seeder
 
     public function run(): void
     {
-        $categories = [
-            'Developpement Web',
-            'Design',
-            'Langues',
-            'Marketing',
-            'Bureautique',
-        ];
+        $categories = json_decode(
+            file_get_contents(database_path('data/categories.json')),
+            true
+        );
 
-        foreach ($categories as $name) {
+        foreach ($categories as $category) {
             Category::firstOrCreate(
-                ['name' => $name],
+                ['slug' => $category['slug']],
                 [
-                    'slug' => Str::slug($name),
-                    'description' => 'Category for '.$name,
+                    'name' => $category['name'],
+                    'description' => $category['description'],
                     'is_active' => true,
                 ]
             );
