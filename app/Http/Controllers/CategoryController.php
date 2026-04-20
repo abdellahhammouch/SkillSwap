@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
-use App\Models\Category;
 use App\Services\CategoryService;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 
 class CategoryController extends Controller
@@ -20,39 +17,13 @@ class CategoryController extends Controller
 
     public function index(): View
     {
-        $categories = $this->categoryService->getAllCategories();
-
-        return view('categories.index', compact('categories'));
+        return view('categories.index');
     }
 
-    public function store(StoreCategoryRequest $request): RedirectResponse
+    public function json(): JsonResponse
     {
-        $this->categoryService->createCategory($request->validated());
+        $categories = $this->categoryService->getActiveCategories();
 
-        return redirect()
-            ->route('categories.index')
-            ->with('success', 'Category created successfully.');
-    }
-
-    public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
-    {
-        $this->categoryService->updateCategory($category, $request->validated());
-
-        return redirect()
-            ->route('categories.index')
-            ->with('success', 'Category updated successfully.');
-    }
-
-    public function destroy(Category $category): RedirectResponse
-    {
-        if (! auth()->user()->hasRole('admin')) {
-            abort(403);
-        }
-
-        $this->categoryService->deleteCategory($category);
-
-        return redirect()
-            ->route('categories.index')
-            ->with('success', 'Category deleted successfully.');
+        return response()->json($categories);
     }
 }

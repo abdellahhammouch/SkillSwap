@@ -1,0 +1,232 @@
+[
+  {
+    "name": "Programming",
+    "slug": "programming",
+    "description": "Web development, software engineering, algorithms, and coding basics."
+  },
+  {
+    "name": "Frontend Development",
+    "slug": "frontend-development",
+    "description": "HTML, CSS, JavaScript, responsive design, and modern frontend frameworks."
+  },
+  {
+    "name": "Backend Development",
+    "slug": "backend-development",
+    "description": "Server-side development, APIs, databases, and application architecture."
+  },
+  {
+    "name": "Mobile Development",
+    "slug": "mobile-development",
+    "description": "Android, iOS, Flutter, React Native, and mobile application basics."
+  },
+  {
+    "name": "Database",
+    "slug": "database",
+    "description": "SQL, database design, relationships, queries, and data modeling."
+  },
+  {
+    "name": "Cybersecurity",
+    "slug": "cybersecurity",
+    "description": "Security basics, safe development, authentication, and threat awareness."
+  },
+  {
+    "name": "Artificial Intelligence",
+    "slug": "artificial-intelligence",
+    "description": "AI concepts, machine learning basics, prompts, and intelligent systems."
+  },
+  {
+    "name": "Data Science",
+    "slug": "data-science",
+    "description": "Data analysis, visualization, statistics, and practical data workflows."
+  },
+  {
+    "name": "DevOps",
+    "slug": "devops",
+    "description": "Deployment, CI/CD, servers, containers, and development operations."
+  },
+  {
+    "name": "Design",
+    "slug": "design",
+    "description": "UI design, UX design, graphic design, and creative tools."
+  },
+  {
+    "name": "UI UX Design",
+    "slug": "ui-ux-design",
+    "description": "User interfaces, user experience, wireframes, prototypes, and usability."
+  },
+  {
+    "name": "Graphic Design",
+    "slug": "graphic-design",
+    "description": "Visual identity, posters, branding, layouts, and digital graphics."
+  },
+  {
+    "name": "Video Editing",
+    "slug": "video-editing",
+    "description": "Editing, transitions, storytelling, short videos, and post-production."
+  },
+  {
+    "name": "Photography",
+    "slug": "photography",
+    "description": "Camera basics, editing, composition, and visual storytelling."
+  },
+  {
+    "name": "Languages",
+    "slug": "languages",
+    "description": "Language learning, speaking practice, writing, and translation."
+  },
+  {
+    "name": "English",
+    "slug": "english",
+    "description": "English speaking, grammar, vocabulary, writing, and conversation practice."
+  },
+  {
+    "name": "French",
+    "slug": "french",
+    "description": "French grammar, pronunciation, speaking, writing, and comprehension."
+  },
+  {
+    "name": "Arabic",
+    "slug": "arabic",
+    "description": "Arabic language practice, writing, grammar, and communication."
+  },
+  {
+    "name": "Spanish",
+    "slug": "spanish",
+    "description": "Spanish vocabulary, grammar, pronunciation, and conversation practice."
+  },
+  {
+    "name": "Mathematics",
+    "slug": "mathematics",
+    "description": "Algebra, calculus, statistics, logic, and problem solving."
+  },
+  {
+    "name": "Physics",
+    "slug": "physics",
+    "description": "Mechanics, electricity, waves, formulas, and scientific reasoning."
+  },
+  {
+    "name": "Chemistry",
+    "slug": "chemistry",
+    "description": "Chemical reactions, formulas, lab concepts, and science fundamentals."
+  },
+  {
+    "name": "Biology",
+    "slug": "biology",
+    "description": "Cells, genetics, anatomy, ecology, and living systems."
+  },
+  {
+    "name": "Marketing",
+    "slug": "marketing",
+    "description": "Digital marketing, social media, branding, and content strategy."
+  },
+  {
+    "name": "Social Media",
+    "slug": "social-media",
+    "description": "Content creation, platform strategy, engagement, and online presence."
+  },
+  {
+    "name": "Business",
+    "slug": "business",
+    "description": "Entrepreneurship, management, finance basics, and project planning."
+  },
+  {
+    "name": "Finance",
+    "slug": "finance",
+    "description": "Budgeting, financial basics, accounting concepts, and money management."
+  },
+  {
+    "name": "Project Management",
+    "slug": "project-management",
+    "description": "Planning, organization, teamwork, deadlines, and project delivery."
+  },
+  {
+    "name": "Public Speaking",
+    "slug": "public-speaking",
+    "description": "Presentation skills, confidence, storytelling, and audience communication."
+  },
+  {
+    "name": "Writing",
+    "slug": "writing",
+    "description": "Creative writing, copywriting, academic writing, and storytelling."
+  },
+  {
+    "name": "Academic Writing",
+    "slug": "academic-writing",
+    "description": "Essays, reports, research structure, citations, and formal writing."
+  },
+  {
+    "name": "Career",
+    "slug": "career",
+    "description": "CV writing, interview preparation, productivity, and professional skills."
+  },
+  {
+    "name": "Resume Writing",
+    "slug": "resume-writing",
+    "description": "CV improvement, cover letters, portfolio structure, and job applications."
+  },
+  {
+    "name": "Interview Preparation",
+    "slug": "interview-preparation",
+    "description": "Interview questions, communication, confidence, and job readiness."
+  },
+  {
+    "name": "Music",
+    "slug": "music",
+    "description": "Instrument practice, music theory, production, and singing."
+  },
+  {
+    "name": "Guitar",
+    "slug": "guitar",
+    "description": "Guitar chords, rhythm, songs, practice routines, and music basics."
+  },
+  {
+    "name": "Piano",
+    "slug": "piano",
+    "description": "Piano basics, chords, scales, reading notes, and practice exercises."
+  },
+  {
+    "name": "Cooking",
+    "slug": "cooking",
+    "description": "Recipes, meal preparation, kitchen basics, and cooking techniques."
+  },
+  {
+    "name": "Fitness",
+    "slug": "fitness",
+    "description": "Training routines, healthy habits, strength, flexibility, and exercise."
+  },
+  {
+    "name": "Drawing",
+    "slug": "drawing",
+    "description": "Sketching, illustration, perspective, shading, and creative practice."
+  },
+  {
+    "name": "3D Modeling",
+    "slug": "3d-modeling",
+    "description": "3D design, modeling basics, rendering, and digital object creation."
+  },
+  {
+    "name": "Game Development",
+    "slug": "game-development",
+    "description": "Game logic, engines, level design, mechanics, and interactive projects."
+  },
+  {
+    "name": "Robotics",
+    "slug": "robotics",
+    "description": "Robotics basics, sensors, automation, electronics, and simple builds."
+  },
+  {
+    "name": "Electronics",
+    "slug": "electronics",
+    "description": "Circuits, components, Arduino, sensors, and practical electronics."
+  },
+  {
+    "name": "Productivity",
+    "slug": "productivity",
+    "description": "Time management, focus, planning, habits, and personal organization."
+  },
+  {
+    "name": "Personal Development",
+    "slug": "personal-development",
+    "description": "Confidence, goals, mindset, learning methods, and self-improvement."
+  }
+]
