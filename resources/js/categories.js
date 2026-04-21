@@ -1,17 +1,17 @@
 function createCategoryCard(category) {
     const card = document.createElement('div');
-    card.className = 'border border-gray-200 rounded-lg p-4';
+    card.className = 'ss-list-card';
 
     const title = document.createElement('h4');
-    title.className = 'text-base font-semibold text-gray-900';
+    title.className = 'text-base font-semibold text-white';
     title.textContent = category.name;
 
     const slug = document.createElement('p');
-    slug.className = 'text-sm text-gray-500 mt-1';
+    slug.className = 'mt-1 text-sm text-blue-300';
     slug.textContent = category.slug;
 
     const description = document.createElement('p');
-    description.className = 'text-sm text-gray-700 mt-2';
+    description.className = 'mt-2 text-sm text-slate-400';
     description.textContent = category.description || 'No description';
 
     card.appendChild(title);
@@ -30,7 +30,7 @@ function displayCategories(categoriesList, categories) {
 }
 
 function displayCategoriesError(categoriesList) {
-    categoriesList.innerHTML = '<p class="text-sm text-red-600">Categories could not be loaded.</p>';
+    categoriesList.innerHTML = '<p class="text-sm text-rose-300">Categories could not be loaded.</p>';
 }
 
 function loadCategories() {
