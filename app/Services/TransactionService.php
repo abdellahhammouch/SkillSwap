@@ -50,12 +50,12 @@ class TransactionService
 
             $this->transactionRepository->updateUserBalance(
                 $learner,
-                max(0, $learner->credit_balance_minutes - $amount)
+                max(0, $learner->creditBalance - $amount)
             );
 
             $this->transactionRepository->updateUserBalance(
                 $helper,
-                $helper->credit_balance_minutes + $amount
+                $helper->creditBalance + $amount
             );
         });
     }

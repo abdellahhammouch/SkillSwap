@@ -21,7 +21,7 @@ class TransactionRepository
     public function updateUserBalance(User $user, $newBalance)
     {
         $user->update([
-            'credit_balance_minutes' => $newBalance,
+            'creditBalance' => $newBalance,
         ]);
 
         return $user;

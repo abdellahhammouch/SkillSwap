@@ -19,7 +19,7 @@ class User extends Authenticatable
         'bio',
         'city',
         'avatar',
-        'credit_balance_minutes',
+        'creditBalance',
         'reputation_score',
         'account_status',
     ];

@@ -2,7 +2,10 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Enums\RoleEnum;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -18,6 +21,8 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register(): void
     {
+        Role::create(['name' => RoleEnum::STUDENT->value]);
+
         $response = $this->post('/register', [
             'first_name' => 'Test',
             'last_name' => 'User',
@@ -27,6 +32,7 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
+        $this->assertSame(120, User::where('email', 'test@example.com')->first()->creditBalance);
         $response->assertRedirect(route('dashboard', absolute: false));
     }
 }

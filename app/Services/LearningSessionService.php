@@ -79,7 +79,7 @@ class LearningSessionService
             abort(422, 'The selected time is already in the past.');
         }
 
-        if ($exchangeRequest->learner->credit_balance_minutes < $proposedTime->duration_minutes) {
+        if ($exchangeRequest->learner->creditBalance < $proposedTime->duration_minutes) {
             abort(422, 'The learner does not have enough SS to plan this session.');
         }
 

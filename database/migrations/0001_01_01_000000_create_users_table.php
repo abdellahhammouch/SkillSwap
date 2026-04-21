@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->text('bio')->nullable();
             $table->string('city')->nullable();
-            $table->string('avatar')->nullable();
-            $table->unsignedInteger('credit_balance_minutes')->default(0);
+            $table->text('avatar')->nullable();
+            $table->unsignedInteger('creditBalance')->default(0);
             $table->decimal('reputation_score', 3, 2)->default(0);
             $table->enum('account_status', ['active', 'banned'])->default('active');
             $table->timestamp('email_verified_at')->nullable();
