@@ -9,6 +9,7 @@ use App\Models\Skill;
 use App\Services\CategoryService;
 use App\Services\SkillService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class SkillController extends Controller
@@ -22,13 +23,18 @@ class SkillController extends Controller
         $this->categoryService = $categoryService;
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
         $skills = $this->skillService->getUserSkills(auth()->id());
         $categories = $this->categoryService->getActiveCategories();
         $levels = SkillLevelEnum::cases();
+        $skillToEdit = null;
 
-        return view('skills.index', compact('skills', 'categories', 'levels'));
+        if ($request->has('edit')) {
+            $skillToEdit = Skill::where('user_id', auth()->id())->findOrFail($request->edit);
+        }
+
+        return view('skills.index', compact('skills', 'categories', 'levels', 'skillToEdit'));
     }
 
     public function store(StoreSkillRequest $request): RedirectResponse
