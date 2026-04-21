@@ -1,41 +1,37 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('My Needs') }}
-        </h2>
+        <h2 class="text-3xl font-extrabold tracking-tight text-white">My Needs</h2>
+        <p class="mt-1 text-sm text-slate-400">Create, edit, or delete what you want to learn.</p>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="pb-12">
+        <div class="ss-container space-y-6">
             @if (session('success'))
-                <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded">
+                <div class="ss-success">
                     {{ session('success') }}
                 </div>
             @endif
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Create Need</h3>
+            <div class="ss-card">
+                @if ($needToEdit)
+                    <h3 class="text-lg font-bold text-white">Edit Need</h3>
+                    <p class="mt-1 text-sm text-slate-400">Update the old information, then save.</p>
 
-                @if ($categories->isEmpty())
-                    <p class="text-sm text-gray-600">
-                        No active categories are available. Please run the category seeder first.
-                    </p>
-                @else
-                    <form method="POST" action="{{ route('needs.store') }}" class="space-y-4">
+                    <form method="POST" action="{{ route('needs.update', $needToEdit) }}" class="mt-5 space-y-4">
                         @csrf
+                        @method('PATCH')
 
                         <div>
-                            <x-input-label for="title" :value="__('Title')" />
-                            <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title')" required />
+                            <x-input-label for="title" value="Title" />
+                            <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title', $needToEdit->title)" required />
                             <x-input-error class="mt-2" :messages="$errors->get('title')" />
                         </div>
 
                         <div>
-                            <x-input-label for="category_id" :value="__('Category')" />
-                            <select id="category_id" name="category_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                <option value="">Choose a category</option>
+                            <x-input-label for="category_id" value="Category" />
+                            <select id="category_id" name="category_id" class="mt-1 block w-full" required>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>
+                                    <option value="{{ $category->id }}" @selected(old('category_id', $needToEdit->category_id) == $category->id)>
                                         {{ $category->name }}
                                     </option>
                                 @endforeach
@@ -44,11 +40,10 @@
                         </div>
 
                         <div>
-                            <x-input-label for="target_level" :value="__('Target level')" />
-                            <select id="target_level" name="target_level" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                <option value="">Choose a target level</option>
+                            <x-input-label for="target_level" value="Target level" />
+                            <select id="target_level" name="target_level" class="mt-1 block w-full" required>
                                 @foreach ($levels as $level)
-                                    <option value="{{ $level->value }}" @selected(old('target_level') === $level->value)>
+                                    <option value="{{ $level->value }}" @selected(old('target_level', $needToEdit->target_level) === $level->value)>
                                         {{ ucfirst($level->value) }}
                                     </option>
                                 @endforeach
@@ -57,104 +52,115 @@
                         </div>
 
                         <div>
-                            <x-input-label for="description" :value="__('Description')" />
-                            <textarea id="description" name="description" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('description') }}</textarea>
-                            <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                            <x-input-label for="status" value="Status" />
+                            <select id="status" name="status" class="mt-1 block w-full" required>
+                                <option value="open" @selected(old('status', $needToEdit->status) === 'open')>Open</option>
+                                <option value="closed" @selected(old('status', $needToEdit->status) === 'closed')>Closed</option>
+                            </select>
+                            <x-input-error class="mt-2" :messages="$errors->get('status')" />
                         </div>
 
                         <div>
-                            <x-primary-button>{{ __('Create Need') }}</x-primary-button>
+                            <x-input-label for="description" value="Description" />
+                            <textarea id="description" name="description" rows="4" class="mt-1 block w-full">{{ old('description', $needToEdit->description) }}</textarea>
+                            <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                        </div>
+
+                        <div class="flex gap-3">
+                            <x-primary-button>Update Need</x-primary-button>
+                            <a href="{{ route('needs.index') }}" class="rounded-xl border border-slate-700 px-4 py-2 text-sm font-bold text-slate-300">
+                                Cancel
+                            </a>
                         </div>
                     </form>
+                @else
+                    <h3 class="text-lg font-bold text-white">Create Need</h3>
+                    <p class="mt-1 text-sm text-slate-400">Add a new thing you want to learn.</p>
+
+                    @if ($categories->isEmpty())
+                        <p class="mt-5 text-sm text-slate-400">No categories are available.</p>
+                    @else
+                        <form method="POST" action="{{ route('needs.store') }}" class="mt-5 space-y-4">
+                            @csrf
+
+                            <div>
+                                <x-input-label for="title" value="Title" />
+                                <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title')" required />
+                                <x-input-error class="mt-2" :messages="$errors->get('title')" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="category_id" value="Category" />
+                                <select id="category_id" name="category_id" class="mt-1 block w-full" required>
+                                    <option value="">Choose a category</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <x-input-error class="mt-2" :messages="$errors->get('category_id')" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="target_level" value="Target level" />
+                                <select id="target_level" name="target_level" class="mt-1 block w-full" required>
+                                    <option value="">Choose a target level</option>
+                                    @foreach ($levels as $level)
+                                        <option value="{{ $level->value }}" @selected(old('target_level') === $level->value)>
+                                            {{ ucfirst($level->value) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <x-input-error class="mt-2" :messages="$errors->get('target_level')" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="description" value="Description" />
+                                <textarea id="description" name="description" rows="4" class="mt-1 block w-full">{{ old('description') }}</textarea>
+                                <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                            </div>
+
+                            <div>
+                                <x-primary-button>Create Need</x-primary-button>
+                            </div>
+                        </form>
+                    @endif
                 @endif
             </div>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">My Need List</h3>
+            <div class="ss-card">
+                <h3 class="text-lg font-bold text-white">My Need List</h3>
 
-                <div class="space-y-4">
+                <div class="mt-5 space-y-3">
                     @forelse ($needs as $need)
-                        <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between gap-4 rounded-xl border border-slate-800 bg-slate-950/50 p-4">
                             <div>
-                                <h4 class="text-base font-semibold text-gray-900">{{ $need->title }}</h4>
-                                <p class="text-sm text-gray-500">
-                                    {{ $need->category->name }} - target: {{ ucfirst($need->target_level) }}
-                                </p>
-                                <p class="mt-2 text-sm text-gray-700">{{ $need->description ?: 'No description' }}</p>
-                                <p class="mt-2 text-xs {{ $need->status === 'open' ? 'text-green-600' : 'text-red-600' }}">
+                                <p class="font-bold text-white">{{ $need->title }}</p>
+                                <p class="text-sm text-slate-400">{{ $need->category->name }} - {{ ucfirst($need->target_level) }}</p>
+                                <p class="mt-1 text-sm text-slate-500">{{ $need->description ?: 'No description' }}</p>
+                                <p class="mt-1 text-xs {{ $need->status === 'open' ? 'text-emerald-400' : 'text-rose-400' }}">
                                     {{ ucfirst($need->status) }}
                                 </p>
                             </div>
 
-                            <form method="POST" action="{{ route('needs.update', $need) }}" class="mt-4 space-y-3">
-                                @csrf
-                                @method('PATCH')
+                            <div class="flex items-center gap-4 text-xl">
+                                <a href="{{ route('needs.index', ['edit' => $need->id]) }}" class="text-slate-400 hover:text-blue-400" title="Edit need">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </a>
 
-                                <div>
-                                    <x-input-label :for="'title_'.$need->id" :value="__('Update title')" />
-                                    <x-text-input :id="'title_'.$need->id" name="title" type="text" class="mt-1 block w-full" :value="$need->title" required />
-                                </div>
-
-                                <div>
-                                    <x-input-label :for="'category_'.$need->id" :value="__('Update category')" />
-                                    <select id="{{ 'category_'.$need->id }}" name="category_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" @selected($need->category_id === $category->id)>
-                                                {{ $category->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <x-input-label :for="'target_level_'.$need->id" :value="__('Update target level')" />
-                                    <select id="{{ 'target_level_'.$need->id }}" name="target_level" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                        @foreach ($levels as $level)
-                                            <option value="{{ $level->value }}" @selected($need->target_level === $level->value)>
-                                                {{ ucfirst($level->value) }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <x-input-label :for="'status_'.$need->id" :value="__('Status')" />
-                                    <select id="{{ 'status_'.$need->id }}" name="status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                        <option value="open" @selected($need->status === 'open')>Open</option>
-                                        <option value="closed" @selected($need->status === 'closed')>Closed</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <x-input-label :for="'description_'.$need->id" :value="__('Update description')" />
-                                    <textarea id="{{ 'description_'.$need->id }}" name="description" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ $need->description }}</textarea>
-                                </div>
-
-                                <div>
-                                    <x-primary-button>{{ __('Update') }}</x-primary-button>
-                                </div>
-                            </form>
-
-                            <div class="mt-3 flex gap-3">
-                                @if ($need->status === 'open')
-                                    <form method="POST" action="{{ route('needs.close', $need) }}">
-                                        @csrf
-                                        @method('PATCH')
-
-                                        <x-secondary-button>{{ __('Close') }}</x-secondary-button>
-                                    </form>
-                                @endif
-
-                                <form method="POST" action="{{ route('needs.destroy', $need) }}">
+                                <form method="POST" action="{{ route('needs.destroy', $need) }}" onsubmit="return confirm('Delete this need?')">
                                     @csrf
                                     @method('DELETE')
 
-                                    <x-danger-button>{{ __('Delete') }}</x-danger-button>
+                                    <button class="text-slate-400 hover:text-rose-400" title="Delete need">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </button>
                                 </form>
                             </div>
                         </div>
                     @empty
-                        <p class="text-sm text-gray-600">You have not added any needs yet.</p>
+                        <p class="text-sm text-slate-400">You have not added any needs yet.</p>
                     @endforelse
                 </div>
             </div>

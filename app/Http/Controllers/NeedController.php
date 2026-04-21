@@ -9,6 +9,7 @@ use App\Models\Need;
 use App\Services\CategoryService;
 use App\Services\NeedService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class NeedController extends Controller
@@ -22,13 +23,18 @@ class NeedController extends Controller
         $this->categoryService = $categoryService;
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
         $needs = $this->needService->getUserNeeds(auth()->id());
         $categories = $this->categoryService->getActiveCategories();
         $levels = SkillLevelEnum::cases();
+        $needToEdit = null;
 
-        return view('needs.index', compact('needs', 'categories', 'levels'));
+        if ($request->has('edit')) {
+            $needToEdit = Need::where('user_id', auth()->id())->findOrFail($request->edit);
+        }
+
+        return view('needs.index', compact('needs', 'categories', 'levels', 'needToEdit'));
     }
 
     public function store(StoreNeedRequest $request): RedirectResponse
