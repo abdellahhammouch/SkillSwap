@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NeedController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ExchangeRequestController;
+use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\LearningSessionController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\MessageController;
@@ -23,6 +24,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/explore', [ExploreController::class, 'index'])->name('explore.index');
+
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/data', [CategoryController::class, 'json'])->name('categories.data');
 
@@ -36,8 +39,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/needs/{need}', [NeedController::class, 'update'])->name('needs.update');
     Route::patch('/needs/{need}/close', [NeedController::class, 'close'])->name('needs.close');
     Route::delete('/needs/{need}', [NeedController::class, 'destroy'])->name('needs.destroy');
-    Route::get('/exchange-requests', [ExchangeRequestController::class, 'index'])->name('exchange-requests.index');
-    Route::get('/exchange-requests/create', [ExchangeRequestController::class, 'create'])->name('exchange-requests.create');
     Route::post('/exchange-requests', [ExchangeRequestController::class, 'store'])->name('exchange-requests.store');
     Route::get('/exchange-requests/{exchangeRequest}', [ExchangeRequestController::class, 'show'])->name('exchange-requests.show');
     Route::patch('/exchange-requests/{exchangeRequest}/accept', [ExchangeRequestController::class, 'accept'])->name('exchange-requests.accept');
