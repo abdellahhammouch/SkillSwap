@@ -25,6 +25,8 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $request->user()->load(['skills', 'needs']);
+
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
@@ -32,10 +34,15 @@ class ProfileController extends Controller
 
     public function show(User $user): View
     {
+        $user->load(['skills.category', 'needs.category']);
+        $currentUser = auth()->user();
+
         $profileData = $this->ratingService->getProfileData($user, auth()->id());
 
         return view('profile.show', [
             'user' => $user,
+            'mySkills' => $currentUser->skills()->where('is_active', true)->get(),
+            'myNeeds' => $currentUser->needs()->where('status', 'open')->get(),
             'receivedRatings' => $profileData['receivedRatings'],
             'existingRating' => $profileData['existingRating'],
             'canRate' => $profileData['canRate'],
