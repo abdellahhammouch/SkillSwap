@@ -144,8 +144,8 @@
                         </a>
                     @endif
 
-                    <a href="{{ route('exchange-requests.index') }}" class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900">
-                        Back to requests
+                    <a href="{{ route('explore.index') }}" class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900">
+                        Back to explore
                     </a>
                 </div>
             </div>
