@@ -4,7 +4,7 @@
         <p class="mt-2 text-sm text-slate-400">Master new skills through exchange.</p>
     </div>
 
-    <div class="ss-card mt-8">
+    <div class="ss-card mt-8 px-8 py-8">
         <x-auth-session-status class="mb-4 text-emerald-400" :status="session('status')" />
 
         <form method="POST" action="{{ route('login') }}" class="space-y-5">
@@ -27,11 +27,6 @@
                 <x-text-input id="password" class="mt-2 block w-full" type="password" name="password" placeholder="••••••••" required autocomplete="current-password" />
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
-
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-slate-700 bg-slate-950 text-blue-600 shadow-sm focus:ring-blue-500" name="remember">
-                <span class="ms-2 text-sm text-slate-400">Remember me</span>
-            </label>
 
             <x-primary-button class="w-full py-3">
                 Sign in
