@@ -18,7 +18,6 @@ class User extends Authenticatable
         'password',
         'bio',
         'city',
-        'avatar',
         'creditBalance',
         'reputation_score',
         'account_status',
