@@ -24,13 +24,15 @@ class ProfileTest extends TestCase
     public function test_profile_information_can_be_updated(): void
     {
         $user = User::factory()->create();
+        $oldEmail = $user->email;
 
         $response = $this
             ->actingAs($user)
             ->patch('/profile', [
                 'first_name' => 'Test',
                 'last_name' => 'User',
-                'email' => 'test@example.com',
+                'city' => 'Casablanca',
+                'bio' => 'Simple profile bio.',
             ]);
 
         $response
@@ -41,8 +43,9 @@ class ProfileTest extends TestCase
 
         $this->assertSame('Test', $user->first_name);
         $this->assertSame('User', $user->last_name);
-        $this->assertSame('test@example.com', $user->email);
-        $this->assertNull($user->email_verified_at);
+        $this->assertSame('Casablanca', $user->city);
+        $this->assertSame('Simple profile bio.', $user->bio);
+        $this->assertSame($oldEmail, $user->email);
     }
 
     public function test_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
@@ -54,7 +57,6 @@ class ProfileTest extends TestCase
             ->patch('/profile', [
                 'first_name' => 'Test',
                 'last_name' => 'User',
-                'email' => $user->email,
             ]);
 
         $response
