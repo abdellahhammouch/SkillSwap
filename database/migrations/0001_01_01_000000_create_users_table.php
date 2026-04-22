@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->text('bio')->nullable();
             $table->string('city')->nullable();
-            $table->text('avatar')->nullable();
             $table->unsignedInteger('creditBalance')->default(0);
             $table->decimal('reputation_score', 3, 2)->default(0);
             $table->enum('account_status', ['active', 'banned'])->default('active');
