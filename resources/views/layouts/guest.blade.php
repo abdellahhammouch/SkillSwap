@@ -36,7 +36,7 @@
             </div>
 
             <div class="flex flex-1 items-center justify-center px-4 py-12">
-                <div class="w-full sm:max-w-md">
+                <div class="w-full {{ request()->routeIs('register') ? 'sm:max-w-xl' : 'sm:max-w-md' }}">
                     {{ $slot }}
                 </div>
             </div>
