@@ -2,9 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Rocline';
+    src: url('/fonts/rocline.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bricolage Grotesque';
+    src: url('/fonts/bricolage-grotesque.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
 @layer base {
     body {
         background: #020617;
+        font-family: 'Bricolage Grotesque', sans-serif;
     }
 }
 
@@ -43,6 +58,20 @@
 
     .ss-logo-mark {
         @apply inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white shadow-lg shadow-blue-600/25;
+    }
+
+    .ss-brand-text {
+        font-family: 'Rocline', sans-serif;
+        letter-spacing: 0.01em;
+    }
+
+    .ss-sidebar-label {
+        @apply text-base font-semibold tracking-tight;
+    }
+
+    .ss-title {
+        font-family: 'Bricolage Grotesque', sans-serif;
+        @apply font-semibold tracking-tight;
     }
 
     .ss-input {
@@ -97,4 +126,13 @@
 .ss-page input:focus {
     border-color: rgb(59 130 246);
     --tw-ring-color: rgb(59 130 246);
+}
+
+.ss-hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.ss-hide-scrollbar::-webkit-scrollbar {
+    display: none;
 }
