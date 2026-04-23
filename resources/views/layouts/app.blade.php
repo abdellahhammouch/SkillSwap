@@ -16,22 +16,24 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="ss-page">
+        <div class="ss-page overflow-x-hidden">
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header>
-                    <div class="ss-container py-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+            <div class="min-h-screen min-w-0 pl-80">
+                <!-- Page Heading -->
+                @isset($header)
+                    <header>
+                        <div class="ss-container py-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endisset
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                <!-- Page Content -->
+                <main>
+                    {{ $slot }}
+                </main>
+            </div>
         </div>
     </body>
 </html>
