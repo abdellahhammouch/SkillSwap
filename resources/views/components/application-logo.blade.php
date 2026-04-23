@@ -2,5 +2,5 @@
     <span class="ss-logo-mark">
         <i class="fa-solid fa-right-left text-sm"></i>
     </span>
-    <span class="text-xl font-extrabold tracking-tight text-white">SkillSwap</span>
+    <span class="ss-brand-text text-3xl text-white">SkillSwap</span>
 </div>
