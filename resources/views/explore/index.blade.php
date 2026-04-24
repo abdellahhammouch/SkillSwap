@@ -27,13 +27,9 @@
                     <div class="ss-card">
                         <div class="flex items-start justify-between gap-4">
                             <div class="flex gap-4">
-                                @if ($user->avatar)
-                                    <img src="{{ $user->avatar }}" alt="Profile image" class="h-14 w-14 rounded-full object-cover">
-                                @else
-                                    <div class="flex h-14 w-14 items-center justify-center rounded-full bg-slate-800 text-sm font-bold text-white">
-                                        {{ strtoupper(substr($user->first_name, 0, 1).substr($user->last_name, 0, 1)) }}
-                                    </div>
-                                @endif
+                                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-slate-800 text-sm font-bold text-white">
+                                    {{ strtoupper(substr($user->first_name, 0, 1).substr($user->last_name, 0, 1)) }}
+                                </div>
 
                                 <div>
                                     <h3 class="text-lg font-bold text-white">{{ $user->name }}</h3>
