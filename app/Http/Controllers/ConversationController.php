@@ -27,9 +27,10 @@ class ConversationController extends Controller
 
     public function show(Conversation $conversation): View
     {
+        $conversations = $this->conversationService->getUserConversations(auth()->id());
         $conversation = $this->conversationService->getConversationForUser($conversation, auth()->id());
         $this->messageService->markMessagesAsRead($conversation, auth()->id());
 
-        return view('conversations.show', compact('conversation'));
+        return view('conversations.show', compact('conversation', 'conversations'));
     }
 }

@@ -14,9 +14,10 @@ class ConversationRepository
             'exchangeRequest.helper',
             'exchangeRequest.need',
             'exchangeRequest.skill',
+            'exchangeRequest.proposedTimes',
+            'exchangeRequest.learningSessions',
             'messages.sender',
-        ])
-            ->whereHas('exchangeRequest', function ($query) use ($userId) {
+        ])->whereHas('exchangeRequest', function ($query) use ($userId) {
                 $query->where('learner_id', $userId)
                     ->orWhere('helper_id', $userId);
             })
@@ -31,6 +32,8 @@ class ConversationRepository
             'exchangeRequest.helper',
             'exchangeRequest.need',
             'exchangeRequest.skill',
+            'exchangeRequest.proposedTimes',
+            'exchangeRequest.learningSessions',
             'messages.sender',
         ]);
     }
