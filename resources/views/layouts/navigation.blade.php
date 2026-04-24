@@ -1,81 +1,71 @@
-<nav x-data="{ open: false }" class="border-b border-slate-800/80 bg-slate-950/85 backdrop-blur">
-    <div class="ss-container">
-        <div class="flex h-16 items-center justify-between">
-            <div class="flex items-center gap-8">
-                <a href="{{ route('dashboard') }}">
-                    <x-application-logo />
-                </a>
+<aside class="fixed inset-y-0 left-0 z-40 flex h-screen w-80 flex-col overflow-hidden border-r border-slate-800 bg-slate-900/95 px-7 py-6 backdrop-blur">
+    <div class="shrink-0">
+        <a href="{{ route('dashboard') }}" class="min-w-0">
+            <x-application-logo />
+        </a>
 
-                <div class="hidden items-center gap-6 md:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">Dashboard</x-nav-link>
-                    <x-nav-link :href="route('explore.index')" :active="request()->routeIs('explore.*')">Explore</x-nav-link>
-                    <x-nav-link :href="route('learning-sessions.index')" :active="request()->routeIs('learning-sessions.*')">Sessions</x-nav-link>
-                    <x-nav-link :href="route('conversations.index')" :active="request()->routeIs('conversations.*')">Messages</x-nav-link>
-                    <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.*')">Profile</x-nav-link>
-
-                    @if (Auth::user()->hasRole('admin'))
-                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">Admin</x-nav-link>
-                    @endif
-                </div>
+        <div class="mt-6 rounded-3xl border border-slate-700/70 bg-slate-950/80 px-5 py-4 shadow-2xl shadow-slate-950/40">
+            <p class="text-[11px] font-medium uppercase tracking-[0.3em] text-slate-500">Balance</p>
+            <div class="mt-3 flex items-end justify-between">
+                <span class="text-4xl font-semibold leading-none text-white">{{ Auth::user()->creditBalance }}</span>
+                <span class="rounded-2xl bg-blue-600/15 px-3 py-2 text-sm font-semibold tracking-[0.2em] text-blue-300">SS</span>
             </div>
-
-            <div class="hidden items-center gap-4 md:flex">
-                <div class="rounded-full border border-slate-800 bg-slate-900 px-4 py-2 text-xs text-slate-300">
-                    <span class="mr-1 inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
-                    Balance: {{ Auth::user()->creditBalance }} SS
-                </div>
-
-                <x-dropdown align="right" width="48" contentClasses="py-1 bg-slate-900 border border-slate-800 rounded-xl">
-                    <x-slot name="trigger">
-                        <button class="flex items-center gap-3 rounded-full text-sm font-semibold text-slate-100">
-                            <span>{{ Auth::user()->name }}</span>
-                            @if (Auth::user()->avatar)
-                                <img src="{{ Auth::user()->avatar }}" alt="Profile image" class="h-9 w-9 rounded-full object-cover">
-                            @else
-                                <span class="flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 bg-slate-800 text-xs">
-                                    {{ strtoupper(substr(Auth::user()->first_name, 0, 1).substr(Auth::user()->last_name, 0, 1)) }}
-                                </span>
-                            @endif
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">Profile</x-dropdown-link>
-
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                                Log Out
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-            <button @click="open = ! open" class="inline-flex rounded-xl border border-slate-800 p-2 text-slate-300 md:hidden">
-                <i :class="open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'" class="text-lg"></i>
-            </button>
         </div>
     </div>
 
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden border-t border-slate-800 md:hidden">
-        <div class="space-y-1 py-3">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">Dashboard</x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('explore.index')" :active="request()->routeIs('explore.*')">Explore</x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('learning-sessions.index')" :active="request()->routeIs('learning-sessions.*')">Sessions</x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('conversations.index')" :active="request()->routeIs('conversations.*')">Messages</x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.*')">Profile</x-responsive-nav-link>
+    <div class="mt-12 flex-1 space-y-5 overflow-hidden text-slate-400">
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-4 rounded-2xl px-4 py-4 {{ request()->routeIs('dashboard') ? 'bg-blue-600 text-white shadow-lg shadow-blue-950/40' : 'hover:bg-slate-800 hover:text-white' }}">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full {{ request()->routeIs('dashboard') ? 'bg-blue-500 text-white' : 'bg-slate-800 text-blue-400' }}">
+                <i class="fa-solid fa-house"></i>
+            </span>
+            <span class="ss-sidebar-label">Dashboard</span>
+        </a>
 
-            @if (Auth::user()->hasRole('admin'))
-                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">Admin</x-responsive-nav-link>
-            @endif
+        <a href="{{ route('exchange-requests.index') }}" class="flex items-center gap-4 rounded-2xl px-4 py-4 {{ request()->routeIs('exchange-requests.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-950/40' : 'hover:bg-slate-800 hover:text-white' }}">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full {{ request()->routeIs('exchange-requests.*') ? 'bg-blue-500 text-white' : 'bg-slate-800 text-blue-400' }}">
+                <i class="fa-regular fa-envelope-open"></i>
+            </span>
+            <span class="ss-sidebar-label">Exchange Requests</span>
+        </a>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                    Log Out
-                </x-responsive-nav-link>
-            </form>
-        </div>
+        <a href="{{ route('explore.index') }}" class="flex items-center gap-4 rounded-2xl px-4 py-4 {{ request()->routeIs('explore.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-950/40' : 'hover:bg-slate-800 hover:text-white' }}">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full {{ request()->routeIs('explore.*') ? 'bg-blue-500 text-white' : 'bg-slate-800 text-blue-400' }}">
+                <i class="fa-solid fa-user-group"></i>
+            </span>
+            <span class="ss-sidebar-label">Network</span>
+        </a>
+
+        <a href="{{ route('conversations.index') }}" class="flex items-center gap-4 rounded-2xl px-4 py-4 {{ request()->routeIs('conversations.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-950/40' : 'hover:bg-slate-800 hover:text-white' }}">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full {{ request()->routeIs('conversations.*') ? 'bg-blue-500 text-white' : 'bg-slate-800 text-blue-400' }}">
+                <i class="fa-solid fa-message"></i>
+            </span>
+            <span class="ss-sidebar-label">Messages</span>
+        </a>
+
+        <a href="{{ route('profile.edit') }}" class="flex items-center gap-4 rounded-2xl px-4 py-4 {{ request()->routeIs('profile.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-950/40' : 'hover:bg-slate-800 hover:text-white' }}">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full {{ request()->routeIs('profile.*') ? 'bg-blue-500 text-white' : 'bg-slate-800 text-blue-400' }}">
+                <i class="fa-solid fa-gear"></i>
+            </span>
+            <span class="ss-sidebar-label">My Profile</span>
+        </a>
+
+        @if (Auth::user()->hasRole('admin'))
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-4 rounded-2xl px-4 py-4 {{ request()->routeIs('admin.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-950/40' : 'hover:bg-slate-800 hover:text-white' }}">
+                <span class="flex h-10 w-10 items-center justify-center rounded-full {{ request()->routeIs('admin.*') ? 'bg-blue-500 text-white' : 'bg-slate-800 text-blue-400' }}">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </span>
+                <span class="ss-sidebar-label">Admin</span>
+            </a>
+        @endif
     </div>
-</nav>
+
+    <form method="POST" action="{{ route('logout') }}" class="mt-auto shrink-0 pt-10">
+        @csrf
+        <button class="flex w-full items-center gap-4 rounded-2xl bg-rose-900/60 px-4 py-4 text-left text-sm font-bold text-rose-300">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-rose-950/70">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </span>
+            <span class="ss-sidebar-label">Logout</span>
+        </button>
+    </form>
+</aside>
