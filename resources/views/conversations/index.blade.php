@@ -1,67 +1,48 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Conversations') }}
-        </h2>
-    </x-slot>
+    <div class="bg-slate-950">
+        <div class="h-screen">
+            <div class="grid h-full grid-cols-1 lg:grid-cols-[360px_minmax(0,1fr)]">
+                <section class="border-r border-slate-800 bg-slate-950/80">
+                    <div class="border-b border-slate-800 px-5 py-5">
+                        <h1 class="text-2xl font-semibold text-white">Messages</h1>
+                    </div>
 
-    <div class="py-12">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            @if (session('success'))
-                <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded">
-                    {{ session('success') }}
-                </div>
-            @endif
+                    <div class="h-[calc(100vh-89px)] overflow-y-auto">
+                        @forelse ($conversations as $conversation)
+                            @php
+                                $exchangeRequest = $conversation->exchangeRequest;
+                                $otherUser = $exchangeRequest->learner_id === auth()->id()
+                                    ? $exchangeRequest->helper
+                                    : $exchangeRequest->learner;
+                                $lastMessage = $conversation->messages->sortByDesc('created_at')->first();
+                            @endphp
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">My conversations</h3>
+                            <a href="{{ route('conversations.show', $conversation) }}" class="block border-b border-slate-800 px-5 py-4 hover:bg-slate-900">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="min-w-0">
+                                        <p class="truncate text-base font-semibold text-white">{{ $otherUser->name }}</p>
+                                        <p class="mt-1 truncate text-sm text-blue-400">
+                                            {{ $lastMessage ? $lastMessage->content : 'No messages yet.' }}
+                                        </p>
+                                    </div>
 
-                <div class="space-y-4">
-                    @forelse ($conversations as $conversation)
-                        @php
-                            $exchangeRequest = $conversation->exchangeRequest;
-                            $otherUser = $exchangeRequest->learner_id === auth()->id()
-                                ? $exchangeRequest->helper
-                                : $exchangeRequest->learner;
-                            $lastMessage = $conversation->messages->sortByDesc('created_at')->first();
-                        @endphp
-
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                                <div>
-                                    <p class="text-sm font-semibold text-gray-900">
-                                        Conversation with {{ $otherUser->name }}
-                                    </p>
-
-                                    <p class="text-sm text-gray-600">
-                                        Exchange: {{ $exchangeRequest->type === 'help_request' ? 'Ask for help' : 'Offer help' }}
-                                    </p>
-
-                                    <p class="text-sm text-gray-600">
-                                        Need: {{ $exchangeRequest->need?->title ?: 'No need selected' }}
-                                    </p>
-
-                                    <p class="text-sm text-gray-600">
-                                        Skill: {{ $exchangeRequest->skill?->title ?: 'No skill selected' }}
-                                    </p>
-
-                                    <p class="mt-2 text-sm text-gray-500">
-                                        Last message:
-                                        {{ $lastMessage ? $lastMessage->content : 'No messages yet.' }}
-                                    </p>
+                                    <span class="shrink-0 text-xs text-slate-500">
+                                        {{ $lastMessage ? $lastMessage->created_at->format('H:i') : '' }}
+                                    </span>
                                 </div>
+                            </a>
+                        @empty
+                            <p class="px-5 py-6 text-sm text-slate-500">No conversations yet.</p>
+                        @endforelse
+                    </div>
+                </section>
 
-                                <a href="{{ route('conversations.show', $conversation) }}" class="inline-flex items-center justify-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
-                                    Open
-                                </a>
-                            </div>
-                        </div>
-                    @empty
-                        <p class="text-sm text-gray-600">
-                            No conversations yet. A conversation will be created after an exchange request is accepted.
-                        </p>
-                    @endforelse
-                </div>
+                <section class="flex h-full items-center justify-center bg-slate-900/40 px-6">
+                    <div class="text-center">
+                        <h2 class="text-2xl font-semibold text-white">Open a conversation</h2>
+                        <p class="mt-3 text-sm text-slate-400">Select a message thread from the left panel.</p>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
