@@ -17,6 +17,14 @@ class ExchangeRequestController extends Controller
         $this->exchangeRequestService = $exchangeRequestService;
     }
 
+    public function index(): View
+    {
+        return view('exchange-requests.index', [
+            'receivedRequests' => $this->exchangeRequestService->getReceivedRequests(auth()->id()),
+            'sentRequests' => $this->exchangeRequestService->getSentRequests(auth()->id()),
+        ]);
+    }
+
     public function store(StoreExchangeRequestRequest $request): RedirectResponse
     {
         $exchangeRequest = $this->exchangeRequestService->createRequest(auth()->id(), $request->validated());

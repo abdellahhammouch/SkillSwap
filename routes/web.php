@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/needs/{need}', [NeedController::class, 'update'])->name('needs.update');
     Route::patch('/needs/{need}/close', [NeedController::class, 'close'])->name('needs.close');
     Route::delete('/needs/{need}', [NeedController::class, 'destroy'])->name('needs.destroy');
+    Route::get('/exchange-requests', [ExchangeRequestController::class, 'index'])->name('exchange-requests.index');
     Route::post('/exchange-requests', [ExchangeRequestController::class, 'store'])->name('exchange-requests.store');
     Route::get('/exchange-requests/{exchangeRequest}', [ExchangeRequestController::class, 'show'])->name('exchange-requests.show');
     Route::patch('/exchange-requests/{exchangeRequest}/accept', [ExchangeRequestController::class, 'accept'])->name('exchange-requests.accept');
@@ -52,6 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/exchange-requests/{exchangeRequest}/proposed-times/create', [ProposedTimeController::class, 'create'])->name('proposed-times.create');
     Route::post('/exchange-requests/{exchangeRequest}/proposed-times', [ProposedTimeController::class, 'store'])->name('proposed-times.store');
     Route::patch('/proposed-times/{proposedTime}/select', [ProposedTimeController::class, 'select'])->name('proposed-times.select');
+    Route::post('/exchange-requests/{exchangeRequest}/proposed-times/submit-selection', [ProposedTimeController::class, 'submitSelection'])->name('proposed-times.submit-selection');
+    Route::patch('/exchange-requests/{exchangeRequest}/proposed-times/deny-all', [ProposedTimeController::class, 'denyAll'])->name('proposed-times.deny-all');
 
     Route::get('/learning-sessions', [LearningSessionController::class, 'index'])->name('learning-sessions.index');
     Route::get('/learning-sessions/{learningSession}', [LearningSessionController::class, 'show'])->name('learning-sessions.show');
