@@ -11,8 +11,10 @@ class ProposedTime extends Model
 
     protected $fillable = [
         'exchange_request_id',
+        'proposal_group',
         'start_at',
         'duration_minutes',
+        'status',
         'is_selected',
     ];
 

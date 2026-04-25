@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('proposed_times', function (Blueprint $table) {
             $table->id();
             $table->foreignId('exchange_request_id')->constrained()->cascadeOnDelete();
+            $table->unsignedInteger('proposal_group')->default(1);
             $table->timestamp('start_at');
             $table->unsignedInteger('duration_minutes');
+            $table->string('status')->default('pending');
             $table->boolean('is_selected')->default(false);
             $table->timestamps();
         });
