@@ -7,6 +7,7 @@ use App\Models\ExchangeRequest;
 use App\Models\ProposedTime;
 use App\Services\LearningSessionService;
 use App\Services\ProposedTimeService;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -44,5 +45,31 @@ class ProposedTimeController extends Controller
         return redirect()
             ->route('learning-sessions.show', $learningSession)
             ->with('success', 'Learning session planned successfully.');
+    }
+
+    public function submitSelection(Request $request, ExchangeRequest $exchangeRequest): RedirectResponse
+    {
+        $request->validate([
+            'proposed_time_id' => ['required', 'integer'],
+        ]);
+
+        $proposedTime = $exchangeRequest->proposedTimes()
+            ->where('id', $request->proposed_time_id)
+            ->firstOrFail();
+
+        $learningSession = $this->learningSessionService->createFromSelectedTime($proposedTime, auth()->id());
+
+        return redirect()
+            ->route('conversations.show', $exchangeRequest->conversation)
+            ->with('success', 'Learning session planned successfully.');
+    }
+
+    public function denyAll(ExchangeRequest $exchangeRequest): RedirectResponse
+    {
+        $this->proposedTimeService->denyPendingTimes($exchangeRequest, auth()->id());
+
+        return redirect()
+            ->route('conversations.show', $exchangeRequest->conversation)
+            ->with('success', 'All proposed times were denied.');
     }
 }
